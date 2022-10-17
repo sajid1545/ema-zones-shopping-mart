@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLoaderData, Link } from 'react-router-dom';
-import { addToDb, getStoredCart } from '../../Utilities/fakeDb';
+import { addToDb, deleteDb, getStoredCart } from '../../Utilities/fakeDb';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import './Shop.css';
@@ -39,6 +39,11 @@ const Shop = () => {
 		addToDb(selectedProduct.id);
 	};
 
+	const handleDeleteCart = () => {
+		deleteDb();
+		setCart([]);
+	};
+
 	return (
 		<div className="shop-container">
 			<div className="products-container grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-8">
@@ -49,14 +54,14 @@ const Shop = () => {
 
 			<div className="cart-container bg-[#FFE0B3] text-center p-5">
 				<Cart cart={cart}>
-				<Link>
+					<Link to={'/orders'}>
 						<button className="px-8 py-2 btn-wide bg-[#FF9900] rounded-lg mt-4 font-bold text-white">
 							Review Items
 						</button>
 					</Link>
-				<Link>
-						<button className="px-8 py-2 btn-wide bg-red-700 rounded-lg mt-4 font-bold text-white">
-							Clear Items
+					<Link>
+						<button onClick={handleDeleteCart} className="px-8 py-2 btn-wide bg-red-700 rounded-lg mt-4 font-bold text-white">
+							Clear All
 						</button>
 					</Link>
 				</Cart>
@@ -66,6 +71,5 @@ const Shop = () => {
 };
 
 export default Shop;
-
 
 // ema-zones-shopping-mart
