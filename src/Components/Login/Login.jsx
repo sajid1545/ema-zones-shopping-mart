@@ -3,21 +3,19 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from './../../Context/UserContext';
 
 const Login = () => {
-	const { user,signIn, googleLogIn } = useContext(AuthContext);
+	const { user, signIn, googleLogIn } = useContext(AuthContext);
 
 	const navigate = useNavigate();
 	const location = useLocation();
 
 	const from = location.state?.from?.pathname || '/';
 
-
-	useEffect(() => { 
+	useEffect(() => {
 		if (user && user.uid) {
 			navigate(from, { replace: true });
-			
+
 		}
 	 },[user,navigate])
-
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -29,6 +27,8 @@ const Login = () => {
 			.then((result) => {
 				const user = result.user;
 				console.log(user);
+				form.reset();
+				navigate(from, { replace: true });
 			})
 			.catch((err) => console.log(err));
 	};
@@ -37,8 +37,8 @@ const Login = () => {
 		googleLogIn()
 			.then((result) => {
 				const user = result.user;
-				console.log(user);
 
+				console.log(user);
 			})
 			.catch((err) => console.log(err));
 	};
